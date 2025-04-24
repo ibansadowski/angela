@@ -2,19 +2,15 @@
 
 ### Introduction
 
-SP1’s precompiles draw inspiration from the earliest days of Ethereum while delivering on critical sets of improvements. They offer the correct middle ground between custom circuits and generalizable zkVMs: combining safety and efficiency to improve the developer experience. 
+With 2 lines of codes developers can reduce the cycle cost of programmable cryptography by at least 77%, with 59% faster execution. All thanks to SP1's precompiles. And it costs pennies on the new Prover Network.
+
+SP1’s precompiles delivers on critical sets of improvements. They offer the correct middle ground between custom circuits and generalizable zkVMs: combining safety and efficiency to improve the developer experience. 
 
 In this blog, let’s go over their technical specifications, see them deliver real-world performance improvements, and conclude on a historical comparison. 
 
 ### It's One + The Other
 
 An application developer looking to leverage programmable cryptography currently has two options: write a “bespoke” circuit using a DSL, where the only operations allowed are those defined in the circuit; or running their code on a zkVM, which can prove an arbitrarily complex set of instructions. The latter of which is compiled into a “common” instruction set and run through the zkVM’s proving system. This “choice” between the two is a false dichotomy, let’s explore why. 
-
-### Historical Precedent
-
-As mentioned, Ethereum itself struggled with a particular problem: how can we execute these complex, computationally intensive, cryptographic operations without going through the EVM. The gas cost of a hashing algorithm alone would be prohibitively expensive and thus never get used. 
-
-They landed on precompiled programs. These programs are executed at the client level (say on Geth), instead of being run on the EVM itself. However, this isn’t scalable. Due to their inclusion (not execution) at the protocol level, developers must wait on core devs to agree to implement it, and on a hard fork to actually make it available.
 
 ### Developer's Dilemma
 
@@ -85,14 +81,5 @@ Finally, both the precompile trace and the main trace are bundled together into 
 
 We can now guarantee that, assuming the precompile is written correctly, executing our SP1 program will yield the expected results. With orders of magnitude fewer cycles of tables and constraints being built.
 
-SP1 gives you total freedom over what to precompile and what to run dynamically. 
-
-
-
-Additional not required section for reading pleasure
-### Historical Note
-
-We take it for granted these days that TCP/IP is the default networking protocol used for global communication. This was far from a given, with serious competition by the OSI Model, a more “elegant” technical solution supported by “stronger” standards. Yet as history shows, the high complexity of OSI lost out to the simple and practical TCP/IP model. We see some parallels here between the two “sides” of this current debate. And the truth isn’t so simple here, in particular *because* of precompiles. As we already see, critical crates have been patched and allow developers to improve their performance right out of the gate. It’s easy to imagine that further programs that are highly sought after will get precompiled as well. What’s most extensible is often most standardizable, and will ultimately “win” out on adoption.
-
-
+SP1 gives you total freedom over what to precompile and what to run dynamically.
 
