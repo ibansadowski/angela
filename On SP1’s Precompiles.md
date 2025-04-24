@@ -2,7 +2,7 @@
 
 ### Introduction
 
-With two lines of code, developers can reduce the cycle cost of verifiable compute by at least 77% and cut execution time by 59%. All thanks to SP1's precompiles. And it costs pennies on the new Prover Network.
+With two lines of code, developers can reduce the cycle cost of verifiable compute by at least 77% and cut execution time by 59%. This is all thanks to SP1's precompiles. And it costs pennies on the new Prover Network.
 
 SP1’s precompiles deliver critical improvements to zk development. They offer the optimal middle ground between custom circuits and general-purpose zkVMs, combining safety and efficiency to improve the developer experience. 
 
@@ -14,7 +14,7 @@ An application developer looking to leverage programmable cryptography currently
 
 ### Developer Dilemma
 
-Developers looking to maximize efficiency for their computation-heavy tasks, such as hashing algorithms, might default to circuits. Custom circuits are hand-optimized through clever math and coding tricks to deliver orders of magnitude faster performance, compared to sequentially running each necessary step in a zkVM. 
+Developers looking to maximize efficiency for their computation-heavy tasks, such as hashing algorithms, might default to circuits. Custom circuits are hand-optimized through clever math and coding tricks to deliver orders of magnitude faster performance than sequentially running each necessary step in a zkVM. 
 
 The rest of their code, however, would require the same level of stringent detail, and development time balloons.
 This is where precompiles — generalized circuits that stand adjacent to our zkVM — enable them to offload frequently used operations.
@@ -57,7 +57,7 @@ How exactly does SP1 achieve this? Let’s briefly cover SP1 and where precompil
 
 - *Execution Trace*: A table representation, detailing every intermediate step or state transition of the computation. Each state transition or computational step is captured as a distinct row within these tables.
 
-- *Constraints*: Logical rules or relationships that tie these steps, and other tables, together. They ensure consistency across tables by encoding the correctness of the computation.
+- *Constraints*: Logical rules or relationships that tie these steps and other tables together. They ensure consistency across tables by encoding the correctness of the computation.
 
 Together, tables and constraints capture a static snapshot of the program's execution. From that snapshot, we can efficiently and cryptographically verify the computation, yielding a STARK proof of correctness.
 
@@ -65,7 +65,7 @@ From the developer's point of view, using SP1 feels like regular programming: yo
 
 ![Execution Flow](Figures/Flow.png "Execution Flow")
 
-Once the code execution encounters a precompile, it short-circuits out to an existing table. Instead of recomputing the whole trace itself, SP1 executes a syscall within the RISC-V runtime. This redirects the code execution to a highly-optimized, pre-established lookup table. These lookup tables are nothing more than custom circuits themselves! 
+Once the code execution encounters a precompile, it short-circuits to an existing table. Instead of recomputing the whole trace itself, SP1 executes a syscall within the RISC-V runtime. This redirects the code execution to a highly-optimized, pre-established lookup table. These lookup tables are nothing more than custom circuits themselves! 
 
 ![Execution Flow with Precompile](Figures/PreFlow.png "Execution Flow with Precompile")
 
