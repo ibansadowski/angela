@@ -16,7 +16,7 @@ An application developer looking to leverage programmable cryptography currently
 
 Developers looking to maximize efficiency for their computation-heavy tasks, such as hashing algorithms, might default to circuits. Custom circuits are hand-optimized through clever math and coding tricks to deliver orders of magnitude faster performance than sequentially running each necessary step in a zkVM. 
 
-The rest of their code, however, would require the same level of stringent detail, and development time balloons.
+The rest of their code, however, will require the same level of stringent detail, and development time balloons.
 This is where precompiles — generalized circuits that stand adjacent to our zkVM — enable them to offload frequently used operations.
 
 ### Illustrative Toy Example
@@ -61,11 +61,11 @@ How exactly does SP1 achieve this? Let’s briefly cover SP1 and where precompil
 
 Together, tables and constraints capture a static snapshot of the program's execution. From that snapshot, we can efficiently and cryptographically verify the computation, yielding a STARK proof of correctness.
 
-From the developer's point of view, using SP1 feels like regular programming: you write your program in Rust, it gets compiled down to RISC-V assembly code, and SP1 translates that into an execution trace and its corresponding constraints.
+From the developer's point of view, using SP1 feels like regular programming: you write your program in Rust, it compiles down to RISC-V assembly code, and SP1 translates that into an execution trace and its corresponding constraints.
 
 ![Execution Flow](Figures/Flow.png "Execution Flow")
 
-Once the code execution encounters a precompile, it short-circuits to an existing table. Instead of recomputing the whole trace itself, SP1 executes a syscall within the RISC-V runtime. This redirects the code execution to a highly-optimized, pre-established lookup table. These lookup tables are nothing more than custom circuits themselves! 
+When execution encounters a precompile, it short-circuits to an existing table. Instead of recomputing the whole trace itself, SP1 executes a syscall within the RISC-V runtime. This redirects the code execution to a highly-optimized, pre-established lookup table. These lookup tables are nothing more than custom circuits themselves! 
 
 ![Execution Flow with Precompile](Figures/PreFlow.png "Execution Flow with Precompile")
 
