@@ -14,14 +14,14 @@ An application developer looking to leverage programmable cryptography currently
 
 ### Developer Dilemma
 
-Developers looking for efficiency from their computation-heavy tasks, such as hashing algorithms, might default to circuits. Custom circuits are hand-optimized through clever math and coding tricks to deliver orders of magnitude faster performance, compared to sequentially running each necessary step in a zkVM. 
+Developers looking to maximize efficiency for their computation-heavy tasks, such as hashing algorithms, might default to circuits. Custom circuits are hand-optimized through clever math and coding tricks to deliver orders of magnitude faster performance, compared to sequentially running each necessary step in a zkVM. 
 
-The rest of their code, however, would require the same level of stringent detail and development time balloons.
-This is where precompiles — generalized circuits that stand adjacent to our zkVM — enable us to offload frequently used operations.
+The rest of their code, however, would require the same level of stringent detail, and development time balloons.
+This is where precompiles — generalized circuits that stand adjacent to our zkVM — enable them to offload frequently used operations.
 
 ### Illustrative Toy Example
 
-Now (for the purpose of illustration, not production) let’s run a program that uses a common cryptographic algorithm, SHA-256. We'll construct a Merkle tree from a given leaf, generate a proof of inclusion for that specific leaf, verify the proof against the Merkle root, and encode and output public values for external verification.
+Now (for the purpose of illustration, not production) let’s run a program that uses a common cryptographic algorithm, SHA-256. We'll construct a Merkle tree from a given leaf, generate a proof of inclusion for that leaf, verify the proof against the Merkle root, and encode and output public values for external verification.
 
 We’ll run this on the Prover Network to establish the strongest foundation for our benchmarks.
 
@@ -59,9 +59,9 @@ How exactly does SP1 achieve this? Let’s briefly cover SP1 and where precompil
 
 - *Constraints*: Logical rules or relationships that tie these steps, and other tables, together. They ensure consistency across tables by encoding the correctness of the computation.
 
-Together, tables and constraints provide a structured representation of program execution, which allows the entire computation to be efficiently and cryptographically verifiable. The final result of generating a proof from a union of tables and constraints is a STARK proof.
+Together, tables and constraints capture a static snapshot of the program's execution. From that snapshot, we can efficiently and cryptographically verify the computation, yielding a STARK proof of correctness.
 
-Users write their program in Rust, which gets compiled down to RISC-V assembly code. This code is then translated into an execution trace and its associated constraints.
+From the developer's point of view, using SP1 feels like regular programming: you write your program in Rust, it gets compiled down to RISC-V assembly code, and SP1 translates that into an execution trace and its corresponding constraints.
 
 ![Execution Flow](Figures/Flow.png "Execution Flow")
 
@@ -72,7 +72,7 @@ Once the code execution encounters a precompile, it short-circuits out to an exi
 These circuits (specialized STARKs) accelerate the rate of computation, since the tables have been pre-computed. After executing the precompile, SP1 reintegrates the results back into the main RISC-V execution trace. This is possible because precompiles can directly read/write memory. 
 Finally, both the precompile trace and the main trace are bundled together into a unified STARK proof.
 
-We can now guarantee (assuming the precompile is written correctly) that executing our SP1 program yields the expected results **with orders of magnitude fewer cycles spent building tables and constraints**.
+We can now guarantee (assuming the precompile is written correctly) that executing our SP1 program produces the expected results **with orders of magnitude fewer cycles spent building tables and constraints**.
 
 SP1 gives you total freedom over what to precompile and what to run dynamically.
 
