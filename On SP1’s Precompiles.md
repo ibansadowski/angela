@@ -2,7 +2,7 @@
 
 ### Introduction
 
-With two lines of code, developers can reduce the cycle cost of verifiable compute by at least 77% and cuts execution time by 59%. All thanks to SP1's precompiles. And it costs pennies on the new Prover Network.
+With two lines of code, developers can reduce the cycle cost of verifiable compute by at least 77% and cut execution time by 59%. All thanks to SP1's precompiles. And it costs pennies on the new Prover Network.
 
 SP1’s precompiles deliver critical improvements to zk development. They offer the optimal middle ground between custom circuits and general-purpose zkVMs, combining safety and efficiency to improve the developer experience. 
 
@@ -17,7 +17,7 @@ An application developer looking to leverage programmable cryptography currently
 Developers looking for efficiency from their computation-heavy tasks, such as hashing algorithms, might default to circuits. Custom circuits are hand-optimized through clever math and coding tricks to deliver orders of magnitude faster performance, compared to sequentially running each necessary step in a zkVM. 
 
 The rest of their code, however, would require the same level of stringent detail and development time balloons.
-This is where precompiles come in — generalized circuits that stand adjacent to our zkVM — that enables us to offload frequently used operations.
+This is where precompiles — generalized circuits that stand adjacent to our zkVM — enable us to offload frequently used operations.
 
 ### Illustrative Toy Example
 
@@ -33,17 +33,6 @@ And here’s our second:
 
 ![2nd Run](Figures/2ndRun.png "2nd Run")
 
-To be clear, here’s the breakdown:
-- 1st Run (without precompile):
-    - Gas: 3,022,143
-    - Cycle limit: 1,892,952
-    - time.busy: 87.7ms (execution time)
-
-- 2nd Run (with precompile):
-    - Gas: 1,991,440
-    - Cycle limit: 428,045
-    - time.busy: 36.2ms (execution time)
-
 So the precompile version shows:
 - Gas usage reduced from 3,022,143 to 1,991,440 (about 34% reduction)
 - Cycle limit reduced from 1,892,952 to 428,045 (about 77% reduction)
@@ -56,12 +45,9 @@ How was this significant performance improvement achieved? **Two simple lines of
 [patch.crates-io]
 sha2-v0-10-8 = { git = "https://github.com/sp1-patches/RustCrypto-hashes", package = "sha2", tag = "patch-sha2-0.10.8-sp1-4.0.0" } 
 ```
+This is the power of precompiles.
 
-The remainder of the code can be found at [github.com/ibansadowski/angela](https://github.com/ibansadowski/angela). 
-
-A list of existing precompiles and their associated patched crates can be found here: [Patched Crates](https://docs.succinct.xyz/docs/sp1/optimizing-programs/precompiles#patched-crates).
-
-They include tiny-keccak, BLS12-381, and RSA.
+The remainder of the code can be found at [github.com/ibansadowski/angela](https://github.com/ibansadowski/angela). A list of existing precompiles and their associated patched crates can be found here: [Patched Crates](https://docs.succinct.xyz/docs/sp1/optimizing-programs/precompiles#patched-crates). They include tiny-keccak, BLS12-381, and RSA.
 
 Clearly, in terms of development speed and program execution speed, zkVMs with precompiles are in a league of their own.
 
@@ -83,16 +69,16 @@ Once the code execution encounters a precompile, it short-circuits out to an exi
 
 ![Execution Flow with Precompile](Figures/PreFlow.png "Execution Flow with Precompile")
 
-These circuits (specialized STARKs) accelerate the rate of computation, since the tables have been precomputed. After executing the precompile, SP1 reintegrates the results back into the main RISC-V execution trace. This is possible because precompiles can directly read/write memory. 
+These circuits (specialized STARKs) accelerate the rate of computation, since the tables have been pre-computed. After executing the precompile, SP1 reintegrates the results back into the main RISC-V execution trace. This is possible because precompiles can directly read/write memory. 
 Finally, both the precompile trace and the main trace are bundled together into a unified STARK proof.
 
-We can now guarantee that (assuming the precompile is written correctly) executing our SP1 program yields the expected results with orders of magnitude fewer cycles spent building tables and constraints.
+We can now guarantee (assuming the precompile is written correctly) that executing our SP1 program yields the expected results **with orders of magnitude fewer cycles spent building tables and constraints**.
 
 SP1 gives you total freedom over what to precompile and what to run dynamically.
 
 
-To conclude, SP1's precompiles deliver the immediate efficiency of custom circuits, while being wrapped up in the flexibility of zkVMs. We can expect popular programs to turn into precompiles themselves. Development time will keep trending down thanks to precompiles.  
+To conclude, SP1's precompiles deliver the immediate efficiency of custom circuits, while being wrapped up in the flexibility of zkVMs. We can expect popular programs to turn into precompiles themselves. Therefore, development time will keep trending down thanks to precompiles.  
 ### Historical Note
 
-We take it for granted these days that TCP/IP is the default networking protocol used for global communication. This was far from a given, with serious competition by the OSI Model, a more “elegant” technical solution supported by “stronger” standards. Yet as history shows, the high complexity of OSI lost out to the simple and practical TCP/IP model. We see some parallels here between the two “sides” of this current debate. And the truth isn’t so simple here, in particular *because* of precompiles. What’s most extensible is often most standardizable, and will ultimately “win” out on adoption.
+We take it for granted these days that TCP/IP is the default networking protocol used for global communication. This was far from a given, with serious competition by the OSI Model, a more “elegant” technical solution supported by “stronger” standards. Yet as history shows, the high complexity of OSI lost out to TCP/IP's simple and practical implementation. We see some parallels here between the two “sides” of this current debate. The truth here isn't so simple *because* of precompiles. What’s most extensible is often most standardizable, and will ultimately “win” out on adoption.
 
