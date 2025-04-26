@@ -43,7 +43,7 @@ So the precompile version shows:
 How was this significant performance improvement achieved? **Two simple lines of code** in the root ```Cargo.toml```:
 ``` 
 [patch.crates-io]
-sha2-v0-10-8 = { git = "https://github.com/sp1-patches/RustCrypto-hashes", package = "sha2", tag = "patch-sha2-0.10.8-sp1-4.0.0" } 
+sha2-v0-10-8 = { git = "https://github.com/sp1-patches/RustCrypto-hashes", package = "sha2", tag = "patch-sha2-0.10.8-sp1-4.0.0" }
 ```
 This is the power of precompiles.
 
@@ -69,7 +69,7 @@ When execution encounters a precompile, it short-circuits to an existing table. 
 
 ![Execution Flow with Precompile](Figures/PreFlow.png "Execution Flow with Precompile")
 
-These circuits (specialized STARKs) accelerate the rate of computation, since the tables have been pre-computed. After executing the precompile, SP1 reintegrates the results back into the main RISC-V execution trace. This is possible because precompiles can directly read/write memory. 
+These circuits (specialized STARKs) accelerate the rate of computation, since the tables have been pre-computed. After executing the precompile, SP1 reintegrates the results back into the main RISC-V execution trace. This is possible because precompiles can directly read and write memory. 
 Finally, both the precompile trace and the main trace are bundled together into a unified STARK proof.
 
 We can now guarantee (assuming the precompile is written correctly) that executing our SP1 program produces the expected results **with orders of magnitude fewer cycles spent building tables and constraints**.
@@ -78,7 +78,3 @@ SP1 gives you total freedom over what to precompile and what to run dynamically.
 
 
 To conclude, SP1's precompiles deliver the immediate efficiency of custom circuits, while being wrapped up in the flexibility of zkVMs. We can expect popular programs to turn into precompiles themselves. Therefore, development time will keep trending down thanks to precompiles.  
-### Historical Note
-
-We take it for granted these days that TCP/IP is the default networking protocol used for global communication. This was far from a given, with serious competition by the OSI Model, a more “elegant” technical solution supported by “stronger” standards. Yet as history shows, the high complexity of OSI lost out to TCP/IP's simple and practical implementation. We see some parallels here between the two “sides” of this current debate. The truth here isn't so simple *because* of precompiles. What’s most extensible is often most standardizable, and will ultimately “win” out on adoption.
-
